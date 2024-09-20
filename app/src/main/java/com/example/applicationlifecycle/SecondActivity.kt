@@ -2,7 +2,9 @@ package com.example.applicationlifecycle
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
+import android.widget.ProgressBar
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -12,6 +14,7 @@ import timber.log.Timber
 class SecondActivity : AppCompatActivity() {
     lateinit var app: CustomApplication
     lateinit var backgroundDetector: BackgroundDetector
+    lateinit var progress: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -32,6 +35,7 @@ class SecondActivity : AppCompatActivity() {
         }
 
         val button: Button = findViewById(R.id.button_to_thrird_activity)
+        progress = findViewById(R.id.progressBar)
 
         button.setOnClickListener {
             val intent = Intent(this, TransparentActivity::class.java)
@@ -59,10 +63,14 @@ class SecondActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         Timber.tag(TAG).e("onResume : SecondActivity")
+
+        progress.visibility = View.VISIBLE
     }
 
     override fun onPause() {
         super.onPause()
         Timber.tag(TAG).e("onPause  : SecondActivity")
+
+        progress.visibility = View.GONE
     }
 }
