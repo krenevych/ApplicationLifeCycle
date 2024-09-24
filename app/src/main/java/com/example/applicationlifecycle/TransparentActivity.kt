@@ -8,8 +8,15 @@ import androidx.core.view.WindowInsetsCompat
 import timber.log.Timber
 
 class TransparentActivity : AppCompatActivity() {
+
+    private lateinit var backgroundDetector: BackgroundDetector
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val app = this.applicationContext as CustomApplication
+        backgroundDetector = app.backgroundDetector
+
         enableEdgeToEdge()
         setContentView(R.layout.activity_transparent)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -31,12 +38,16 @@ class TransparentActivity : AppCompatActivity() {
         super.onStart()
 
         Timber.tag(TAG).e("onStart  : TransparentActivity")
+
+        backgroundDetector.activityStarted()
     }
 
     override fun onStop() {
         super.onStop()
 
         Timber.tag(TAG).e("onStop   : TransparentActivity")
+
+        backgroundDetector.activityStarted()
     }
 
     override fun onResume() {

@@ -22,13 +22,13 @@ class CustomApplication : Application() {
             override fun onStart(owner: LifecycleOwner) {
                 super.onStart(owner)
 
-//                Timber.e("ProcessLifecycleOwner: activity foreground")
+                Timber.tag(TAG).e("ProcessLifecycleOwner: activity foreground")
             }
 
             override fun onStop(owner: LifecycleOwner) {
                 super.onStop(owner)
 
-//                Timber.e("ProcessLifecycleOwner: activity background")
+                Timber.tag(TAG).e("ProcessLifecycleOwner: activity background")
             }
         })
     }

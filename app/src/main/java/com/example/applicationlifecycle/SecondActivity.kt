@@ -5,20 +5,20 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import timber.log.Timber
 
-class SecondActivity : AppCompatActivity() {
-    lateinit var app: CustomApplication
-    lateinit var backgroundDetector: BackgroundDetector
-    lateinit var progress: ProgressBar
+class SecondActivity : AppCompatActivity(), BackgroundDetector.Listener {
+    private lateinit var backgroundDetector: BackgroundDetector
+    private lateinit var progress: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        app = this.applicationContext as CustomApplication
+        val app = this.applicationContext as CustomApplication
 
         super.onCreate(savedInstanceState)
 
@@ -34,7 +34,7 @@ class SecondActivity : AppCompatActivity() {
             insets
         }
 
-        val button: Button = findViewById(R.id.button_to_thrird_activity)
+        val button = findViewById<Button>(R.id.button_to_thrird_activity)
         progress = findViewById(R.id.progressBar)
 
         button.setOnClickListener {
@@ -46,13 +46,15 @@ class SecondActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         Timber.tag(TAG).e("onStart  : SecondActivity")
-//        backgroundDetector.activityStarted()
+        backgroundDetector.registerListener(this)
+        backgroundDetector.activityStarted()
     }
 
     override fun onStop() {
         super.onStop()
         Timber.tag(TAG).e("onStop   : SecondActivity")
-//        backgroundDetector.activityStoped()
+        backgroundDetector.activityStopped()
+        backgroundDetector.unregisterListener(this)
     }
 
     override fun onDestroy() {
@@ -72,5 +74,20 @@ class SecondActivity : AppCompatActivity() {
         Timber.tag(TAG).e("onPause  : SecondActivity")
 
         progress.visibility = View.GONE
+    }
+
+//    override fun onTopResumedActivityChanged(isTopResumedActivity: Boolean) {
+//        super.onTopResumedActivityChanged(isTopResumedActivity)
+//
+//        progress.visibility = if (isTopResumedActivity) View.VISIBLE else View.GONE
+//    }
+
+    override fun onBackground() {
+        Timber.tag(TAG).e("onBackground")
+    }
+
+    override fun onForeground() {
+        Timber.tag(TAG).e("onForeground")
+        Toast.makeText(this, "onForeground", Toast.LENGTH_SHORT).show()
     }
 }

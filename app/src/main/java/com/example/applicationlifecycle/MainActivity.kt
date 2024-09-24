@@ -11,12 +11,11 @@ import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var app: CustomApplication
     lateinit var backgroundDetector: BackgroundDetector
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        app = this.applicationContext as CustomApplication
+        val app = this.applicationContext as CustomApplication
 
         super.onCreate(savedInstanceState)
 
@@ -46,14 +45,14 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
         Timber.tag(TAG).e("onStart  : MainActivity")
 
-//        backgroundDetector.activityStarted()
+        backgroundDetector.activityStarted()
     }
 
     override fun onStop() {
         super.onStop()
         Timber.tag(TAG).e("onStop   : MainActivity")
 
-//        backgroundDetector.activityStoped()
+        backgroundDetector.activityStopped()
     }
 
     override fun onDestroy() {
@@ -72,5 +71,12 @@ class MainActivity : AppCompatActivity() {
 
         Timber.tag(TAG).e("onPause  : MainActivity")
     }
+
+    override fun onTopResumedActivityChanged(isTopResumedActivity: Boolean) {
+        super.onTopResumedActivityChanged(isTopResumedActivity)
+
+        Timber.tag(TAG).e("onTopResumedActivityChanged  : MainActivity isTopResumedActivity=$isTopResumedActivity")
+    }
+
 
 }
