@@ -1,6 +1,9 @@
 package com.example.applicationlifecycle
 
+import android.app.Activity
 import android.app.Application
+import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -42,7 +45,40 @@ class CustomApplication : Application() {
                 source.lifecycle.currentState
             }
         })
+
+        registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
+            override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+                Timber.tag(TAG).e("onActivityCreated: $activity")
+            }
+
+            override fun onActivityStarted(activity: Activity) {
+                Timber.tag(TAG).e("onActivityStarted: $activity")
+            }
+
+            override fun onActivityResumed(activity: Activity) {
+                Timber.tag(TAG).e("onActivityResumed: $activity")
+            }
+
+            override fun onActivityPaused(activity: Activity) {
+                Timber.tag(TAG).e("onActivityPaused: $activity")
+            }
+
+            override fun onActivityStopped(activity: Activity) {
+                Timber.tag(TAG).e("onActivityStopped: $activity")
+            }
+
+            override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
+                Timber.tag(TAG).e("onActivitySaveInstanceState: $activity")
+            }
+
+            override fun onActivityDestroyed(activity: Activity) {
+                Timber.tag(TAG).e("onActivityDestroyed: $activity")
+            }
+
+        })
+
     }
+
 
 
 }

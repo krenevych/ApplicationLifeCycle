@@ -2,11 +2,13 @@ package com.example.applicationlifecycle
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
@@ -14,7 +16,7 @@ import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var backgroundDetector: BackgroundDetector
+    private lateinit var backgroundDetector: BackgroundDetector
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -23,6 +25,39 @@ class MainActivity : AppCompatActivity() {
                 Timber.tag(TAG).e("onStateChanged: $event")
             }
 
+        })
+
+        lifecycle.addObserver(object : DefaultLifecycleObserver {
+            override fun onCreate(owner: LifecycleOwner) {
+                super.onCreate(owner)
+                Log.e(TAG, "onCreate: $owner")
+            }
+
+            override fun onDestroy(owner: LifecycleOwner) {
+                super.onDestroy(owner)
+                Log.e(TAG, "onDestroy: $owner")
+            }
+
+            override fun onPause(owner: LifecycleOwner) {
+                super.onPause(owner)
+                Log.e(TAG, "onPause: $owner")
+            }
+
+            override fun onResume(owner: LifecycleOwner) {
+                super.onResume(owner)
+                Log.e(TAG, "onResume: $owner")
+            }
+
+            override fun onStart(owner: LifecycleOwner) {
+                super.onStart(owner)
+                Log.e(TAG, "onStart: $owner")
+
+            }
+
+            override fun onStop(owner: LifecycleOwner) {
+                super.onStop(owner)
+                Log.e(TAG, "onStop: $owner")
+            }
         })
 
         val app = this.applicationContext as CustomApplication
