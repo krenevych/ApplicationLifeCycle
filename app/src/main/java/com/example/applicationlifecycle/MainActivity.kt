@@ -7,6 +7,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LifecycleOwner
 import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
@@ -14,6 +17,13 @@ class MainActivity : AppCompatActivity() {
     lateinit var backgroundDetector: BackgroundDetector
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        lifecycle.addObserver(object : LifecycleEventObserver {
+            override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
+                Timber.tag(TAG).e("onStateChanged: $event")
+            }
+
+        })
 
         val app = this.applicationContext as CustomApplication
 
