@@ -3,7 +3,6 @@ package com.example.applicationlifecycle
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -12,11 +11,13 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
+import com.example.applicationlifecycle.databinding.ActivityMainBinding
 import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var backgroundDetector: BackgroundDetector
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -64,12 +65,15 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
 
+
         Timber.tag(TAG).e("onCreate : MainActivity")
 
         backgroundDetector = app.backgroundDetector
 
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -78,9 +82,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val button: Button = findViewById(R.id.buttonSecondActivity)
-
-        button.setOnClickListener {
+        binding.buttonSecondActivity.setOnClickListener {
             val intent = Intent(this, SecondActivity::class.java)
             startActivity(intent)
         }

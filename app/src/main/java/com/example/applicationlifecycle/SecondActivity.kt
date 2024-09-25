@@ -3,18 +3,17 @@ package com.example.applicationlifecycle
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.applicationlifecycle.databinding.ActivitySecondBinding
 import timber.log.Timber
 
 class SecondActivity : AppCompatActivity(), BackgroundDetector.Listener {
     private lateinit var backgroundDetector: BackgroundDetector
-    private lateinit var progress: ProgressBar
+    private lateinit var binding: ActivitySecondBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -27,17 +26,15 @@ class SecondActivity : AppCompatActivity(), BackgroundDetector.Listener {
         Timber.tag(TAG).e("onCreate : SecondActivity")
 
         enableEdgeToEdge()
-        setContentView(R.layout.activity_second)
+        binding = ActivitySecondBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        val button = findViewById<Button>(R.id.button_to_thrird_activity)
-        progress = findViewById(R.id.progressBar)
-
-        button.setOnClickListener {
+        binding.buttonToThrirdActivity.setOnClickListener {
             val intent = Intent(this, TransparentActivity::class.java)
             startActivity(intent)
         }
@@ -66,14 +63,14 @@ class SecondActivity : AppCompatActivity(), BackgroundDetector.Listener {
         super.onResume()
         Timber.tag(TAG).e("onResume : SecondActivity")
 
-        progress.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.VISIBLE
     }
 
     override fun onPause() {
         super.onPause()
         Timber.tag(TAG).e("onPause  : SecondActivity")
 
-        progress.visibility = View.GONE
+        binding.progressBar.visibility = View.GONE
     }
 
 //    override fun onTopResumedActivityChanged(isTopResumedActivity: Boolean) {
