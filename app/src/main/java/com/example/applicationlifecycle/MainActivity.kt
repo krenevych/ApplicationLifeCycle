@@ -31,33 +31,33 @@ class MainActivity : AppCompatActivity() {
         lifecycle.addObserver(object : DefaultLifecycleObserver {
             override fun onCreate(owner: LifecycleOwner) {
                 super.onCreate(owner)
-                Log.e(TAG, "onCreate: $owner")
+                Timber.e("onCreate: $owner")
             }
 
             override fun onDestroy(owner: LifecycleOwner) {
                 super.onDestroy(owner)
-                Log.e(TAG, "onDestroy: $owner")
+                Timber.e("onDestroy: $owner")
             }
 
             override fun onPause(owner: LifecycleOwner) {
                 super.onPause(owner)
-                Log.e(TAG, "onPause: $owner")
+                Timber.e("onPause: $owner")
             }
 
             override fun onResume(owner: LifecycleOwner) {
                 super.onResume(owner)
-                Log.e(TAG, "onResume: $owner")
+                Timber.e("onResume: $owner")
             }
 
             override fun onStart(owner: LifecycleOwner) {
                 super.onStart(owner)
-                Log.e(TAG, "onStart: $owner")
+                Timber.e("onStart: $owner")
 
             }
 
             override fun onStop(owner: LifecycleOwner) {
                 super.onStop(owner)
-                Log.e(TAG, "onStop: $owner")
+                Timber.e("onStop: $owner")
             }
         })
 
