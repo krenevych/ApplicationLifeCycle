@@ -93,6 +93,18 @@ class MainActivity : AppCompatActivity() {
         Timber.tag(TAG).e("onStart  : MainActivity")
 
         backgroundDetector.activityStarted()
+
+//        thread(start = true) {
+//
+//            for (i in 1..100) {
+//                Handler(Looper.getMainLooper()).post{
+//                    Timber.tag(TAG).e("Thread is running: $i")
+//                }
+//
+//                Thread.sleep(1000)
+//            }
+//
+//        }
     }
 
     override fun onStop() {

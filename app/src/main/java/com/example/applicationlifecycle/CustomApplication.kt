@@ -3,7 +3,6 @@ package com.example.applicationlifecycle
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -37,7 +36,7 @@ class CustomApplication : Application() {
             }
         })
 
-        ProcessLifecycleOwner.get().lifecycle.addObserver(object : LifecycleEventObserver{
+        ProcessLifecycleOwner.get().lifecycle.addObserver(object : LifecycleEventObserver {
             override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
                 Timber.tag("RRRR").e("onStateChanged: $event")
                 Timber.tag("RRRR").e("currentState: ${source.lifecycle.currentState}")

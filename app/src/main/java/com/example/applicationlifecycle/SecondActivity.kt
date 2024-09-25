@@ -2,6 +2,8 @@ package com.example.applicationlifecycle
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -10,6 +12,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.applicationlifecycle.databinding.ActivitySecondBinding
 import timber.log.Timber
+import kotlin.concurrent.thread
 
 class SecondActivity : AppCompatActivity(), BackgroundDetector.Listener {
     private lateinit var backgroundDetector: BackgroundDetector
@@ -45,6 +48,17 @@ class SecondActivity : AppCompatActivity(), BackgroundDetector.Listener {
         Timber.tag(TAG).e("onStart  : SecondActivity")
         backgroundDetector.registerListener(this)
         backgroundDetector.activityStarted()
+
+        thread(start = true) {
+            for (i in 1..100) {
+                Handler(Looper.getMainLooper()).post{
+                    Timber.tag(TAG).e("Thread is running: $i")
+                }
+
+                Thread.sleep(1000)
+            }
+        }
+
     }
 
     override fun onStop() {
